@@ -3,7 +3,7 @@ require_relative 'lib/tools/version'
 Gem::Specification.new do |spec|
   spec.name          = "tools"
   spec.version       = Tools::VERSION
-  spec.authors       = ["Vikto"]
+  spec.authors       = ["Viktor"]
   spec.email         = ["macedonian.wow@live.com"]
 
   spec.summary       = %q{testing ruby.}
@@ -14,8 +14,8 @@ Gem::Specification.new do |spec|
   spec.metadata["allowed_push_host"] = "TODO: Set to 'http://mygemserver.com'"
 
   spec.metadata["homepage_uri"] = spec.homepage
-  spec.metadata["source_code_uri"] = "https://github.com/viktorarsovski/tools.git."
-  spec.metadata["changelog_uri"] = "https://github.com/viktorarsovski/tools.git."
+  spec.metadata["source_code_uri"] = "https://github.com/viktorarsovski/Tools"
+  spec.metadata["changelog_uri"] = "https://github.com/viktorarsovski/Tools"
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.

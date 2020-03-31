@@ -79,3 +79,38 @@ module Tools
     end
   end
 end
+
+class Resistors
+
+  COLORS = {
+    'black' => 0,
+    'brown' => 1,
+    'red' => 2,
+    'orange' => 3,
+    'yellow' => 4,
+    'green' => 5,
+    'blue' => 6,
+    'violet' => 7,
+    'grey' => 8,
+    'white' => 9
+  }
+
+  def initialize(color1,color2,color3)
+    @color1 = color1
+    @color2 = color2
+    @color3 = color3
+  end
+
+  def color_values
+    (RESISTOR[@color1] + RESISTOR[@color2]).delete('0').delete('-')
+  end
+
+  def resistor_values
+    values.to_i
+  end
+
+  def values
+    colors.map{ |x| RESISTORS.index(x) }.first(2).join.to_i
+    color_values.length < 2 ? color_values + RESISTOR[@color3] : color_values
+  end
+end
