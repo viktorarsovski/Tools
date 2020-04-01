@@ -80,37 +80,28 @@ module Tools
   end
 end
 
-class Resistors
+class ResistorColorDuo
+  COLOUR_VALUES = {
+    black: 0,
+    brown: 1,
+    red: 2,
+    orange: 3,
+    yellow: 4,
+    green: 5,
+    blue: 6,
+    violet: 7,
+    grey: 8
+  }.freeze
 
-  COLORS = {
-    'black' => 0,
-    'brown' => 1,
-    'red' => 2,
-    'orange' => 3,
-    'yellow' => 4,
-    'green' => 5,
-    'blue' => 6,
-    'violet' => 7,
-    'grey' => 8,
-    'white' => 9
-  }
-
-  def initialize(color1,color2,color3)
-    @color1 = color1
-    @color2 = color2
-    @color3 = color3
+  def initialize(colours)
+    @colours = colours
   end
 
-  def color_values
-    (RESISTOR[@color1] + RESISTOR[@color2]).delete('0').delete('-')
-  end
-
-  def resistor_values
-    values.to_i
-  end
-
-  def values
-    colors.map{ |x| RESISTORS.index(x) }.first(2).join.to_i
-    color_values.length < 2 ? color_values + RESISTOR[@color3] : color_values
+  def self.value(colours)
+    colours.first(2).reverse.each_with_index.inject(
+      0
+    ) do |value, (colour, index)|
+      value + (10**index * COLOUR_VALUES[colour.to_sym])
+    end
   end
 end
