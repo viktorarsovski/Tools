@@ -78,30 +78,91 @@ module Tools
       allergen_keys.select { |key| s >= key && s -= key }
     end
   end
-end
 
-class ResistorColorDuo
-  COLOUR_VALUES = {
-    black: 0,
-    brown: 1,
-    red: 2,
-    orange: 3,
-    yellow: 4,
-    green: 5,
-    blue: 6,
-    violet: 7,
-    grey: 8
-  }.freeze
+  class ResistorColorDuo
+    COLOR_VALUES = {
+      black: {
+        value: 0,
+        multiplier: 10**0,
+        tolerance: 20
+      },
+      brown: {
+        value: 1,
+        multiplier: 10**1,
+        tolerance: 1
+      },
+      red: {
+        value: 2,
+        multiplier: 10**2,
+        tolerance: 2
+      },
+      orange: {
+        value: 3,
+        multiplier: 10**3
+      },
+      yellow: {
+        value: 4,
+        multiplier: 10**4
+      },
+      green: {
+        value: 5,
+        multiplier: 10**5,
+        tolerance: 0.5
+      },
+      blue: {
+        value: 6,
+        multiplier: 10**6,
+        tolerance: 0.25
+      },
+      violet: {
+        value: 7,
+        multiplier: 10**7,
+        tolerance: 0.1
+      },
+      gray: {
+        value: 8,
+        multiplier: 10**8,
+        tolerance: 0.05
+      },
+      white: {
+        value: 9,
+        multiplier: 10**9
+      },
+      gold: {
+        multiplier: 10**-1,
+        tolerance: 5
+      },
+      silver: {
+        multiplier: 10**-2,
+        tolerance: 10
+      }
+    }
 
-  def initialize(colours)
-    @colours = colours
-  end
+    def initialize(resistor)
+      @value1, @value2, @multiplier, @tolerance = resistor
+    end
 
-  def self.value(colours)
-    colours.first(2).reverse.each_with_index.inject(
-      0
-    ) do |value, (colour, index)|
-      value + (10**index * COLOUR_VALUES[colour.to_sym])
+    def specification
+      "#{resistance} ohms +/- #{tolerance}%"
+    end
+
+    def resistance
+      (two_digits(@value1) * 10 + two_digits(@value2)) * multiplier
+    end
+
+    def two_digits(color)
+      COLOR_VALUES[color.downcase.to_sym][:value]
+    end
+
+    private
+
+    def multiplier
+      @multiplier.nil? ? @multiplier = 1 : COLOR_VALUES[@multiplier.downcase.to_sym][:multiplier]
+    end
+
+    def tolerance
+      @tolerance.nil? ? @tolerance = 20 : COLOR_VALUES[@tolerance.downcase.to_sym][:tolerance]
     end
   end
 end
+
