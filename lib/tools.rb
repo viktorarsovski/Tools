@@ -164,5 +164,33 @@ module Tools
       @tolerance.nil? ? @tolerance = 20 : COLOR_VALUES[@tolerance.downcase.to_sym][:tolerance]
     end
   end
+
+  class Armstrong
+    def initialize(number)
+      @number = number
+    end
+
+    def valid?
+      sum == number
+    end
+
+    private
+
+    def digits
+      number.digits
+    end
+
+    def size
+      digits.size
+    end
+
+    def sum
+      digits.sum {|digit| digit**size }
+    end
+
+    def number
+      @number.abs
+    end
+  end
 end
 
