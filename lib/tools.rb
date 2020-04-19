@@ -192,5 +192,82 @@ module Tools
       @number.abs
     end
   end
+
+  class Antipodes
+    attr_reader :array
+    def initialize(array)
+      @array = array
+    end
+
+    def split_arrays
+      sum.map { |index| index / 2.0 }
+    end
+
+    private
+
+    def first_array
+      array.first(array.size / 2.0)
+    end
+
+    def second_array
+      array.last(array.size / 2.0)
+    end
+
+    def sum
+      transposed.map(&:sum)
+    end
+
+    def transposed
+      [first_array, second_array.reverse].transpose
+    end
+
+    def indexes
+      array = array.size / 2.0
+      @array[0..array]
+    end
+  end
+
+  class OddNumbers
+    def initialize(input_array)
+      @input_array = input_array
+    end
+
+    def first_odd_number
+      return @input_array.join.to_i if @input_array.size <= 1
+
+      all_odd_numbers.first
+    end
+
+    def all_odd_numbers
+      return @input_array.join.to_i if @input_array.size <= 1
+
+      @input_array.group_by { |elem| elem }.select{ |_, j| j.size.odd? }.keys
+    end
+  end
+
+  class ChocolateDilemma
+    attr_reader :viktor, :nadica
+
+    def initialize(viktor, nadica)
+      @viktor = viktor
+      @nadica = nadica
+    end
+
+    def fairness?
+      viktor == nadica
+    end
+
+    private
+
+    def viktor1
+      viktor.map { |x, y| x * y}.sum
+    end
+
+    def nadica2
+      nadica.map { |x, y| x * y}.sum
+    end
+  end
 end
+
+
 
